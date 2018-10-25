@@ -8,6 +8,7 @@ from flask import Flask,render_template,request,redirect,url_for
 app = Flask(__name__)
 
 print(os.environ)
+
 consumer_key = os.environ['POCKET_CONSUMER_KEY']
 access_token = os.environ['POCKET_ACCESS_TOKEN']
 
@@ -25,20 +26,30 @@ def index():
 def test():
   print(request.method)
   if request.method == 'POST':
+    open_number = request.form['num']
+    print(request.form['num'])
     f = open('bookmark.json','r')
     l = json.load(f)
     print(f)
-    values = random.choice(list(l['list'].items()))
-    print(values)
-    url = values[1]['resolved_url']
-    webbrowser.open_new_tab(url)
+    print([a[0][0] for a in list(l['list'].items())])
+    # values = random.sample([a for a in list(l['list'].items()) if a[0] == 'どーが'],int(open_number))
+
+    # print(values)
+    # for k in values:
+    #   print(k[1]['resolved_url'])
+    #   print(k[1]['tags'])
+    #   webbrowser.open(k[1]['resolved_url'],new=2)
+    # url = values[1]['resolved_url']
+    # url = values.items()['resolved_url']
+    # print(url)
+    # webbrowser.open(url,new=2)
     return redirect(url_for('index'))
   else:
     return redirect(url_for('index'))
 
 @app.route('/refresh', methods=['POST'])
 def refresh():
-  payload = {'consumer_key': consumer_key,'access_token': access_token , 'state':'all','sort':'newest'}
+  payload = {'consumer_key': consumer_key,'access_token': access_token , 'state':'all','sort':'newest','detailType':'complete'}
   r=requests.post('https://getpocket.com/v3/get',data=payload)
   responce_data = r.json()
   f = open('bookmark.json','w')
