@@ -8,7 +8,8 @@ from flask import Flask,render_template,request,redirect,url_for
 app = Flask(__name__)
 
 print(os.environ)
-
+os.environ['POCKET_CONSUMER_KEY'] = '81334-d57a6937c20cab86963d47e2'
+os.environ['POCKET_ACCESS_TOKEN'] = '96177e8c-2c1b-7884-0f2e-a2b69c'
 consumer_key = os.environ['POCKET_CONSUMER_KEY']
 access_token = os.environ['POCKET_ACCESS_TOKEN']
 
@@ -31,14 +32,15 @@ def test():
     f = open('bookmark.json','r')
     l = json.load(f)
     print(f)
-    print([a[0][0] for a in list(l['list'].items())])
     # values = random.sample([a for a in list(l['list'].items()) if a[0] == 'どーが'],int(open_number))
+    values = random.sample([a for a in list(l['list'].items())],int(open_number))
+    print(values)
+    for k in values:
+      print(k[1]['resolved_url'])
+      print(k[1]['tags'])
 
-    # print(values)
-    # for k in values:
-    #   print(k[1]['resolved_url'])
-    #   print(k[1]['tags'])
-    #   webbrowser.open(k[1]['resolved_url'],new=2)
+      webbrowser.get('safari')
+      webbrowser.open(k[1]['resolved_url'],new=2)
     # url = values[1]['resolved_url']
     # url = values.items()['resolved_url']
     # print(url)
