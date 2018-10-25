@@ -38,8 +38,6 @@ def test():
     for k in values:
       print(k[1]['resolved_url'])
       print(k[1]['tags'])
-
-      webbrowser.get('safari')
       webbrowser.open(k[1]['resolved_url'],new=2)
     # url = values[1]['resolved_url']
     # url = values.items()['resolved_url']
