@@ -3,7 +3,7 @@ const app = new Vue({
   delimiters: ['[[', ']]'],
   data:{
     results:[],
-    title:[],
+    history:[],
     num:1,
     tags:[],
     tag:'全て'
@@ -15,17 +15,14 @@ const app = new Vue({
         .then(response => {
           console.log(response.data)
           this.results = response.data
-          // for(let k of Object.keys(l)) {
-          //   console.log(l[k])
-          //   this.results.push(l[k])
-          // }
-          // console.log(this.results)
 
           this.results.forEach((val) => {
             console.log(val.resolved_url)
+            this.history.push({title:val.resolved_title,url:val.resolved_url})
             window.open(val.resolved_url)
           })
-          // console.log(this.title)
+          this.history = this.history.reverse();
+          console.log(this.history)
         })
       .catch(error => {
         console.log(error);

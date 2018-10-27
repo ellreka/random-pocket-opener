@@ -35,8 +35,8 @@
       <button type='submit'>更新</button>
     </form>
     <ul class="history">
-      <li v-for="item in title">
-        <a v-bind:href="item" target="_brank">[[ item ]]</a>
+      <li v-for="item in history">
+        <a v-bind:href="item.url" target="_brank">[[ item.title ]]</a>
       </li>
     </ul>
     </div>
