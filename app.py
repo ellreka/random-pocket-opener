@@ -59,7 +59,7 @@ def refresh():
   payload = {'consumer_key': consumer_key,'access_token': access_token , 'state':'all','sort':'newest','detailType':'complete'}
   r=requests.post('https://getpocket.com/v3/get',data=payload)
   responce_data = r.json()
-  f = open('bookmark.json','w')
+  f = open('assets/bookmark.json','w')
   json.dump(responce_data, f, ensure_ascii=False, indent=4, separators=(',', ': '))
   print('リフレッシュ')
   return redirect(url_for('index'))
