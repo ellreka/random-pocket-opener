@@ -2,17 +2,20 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
+    <meta name="viewport" content="width=400,initial-scale=1.0" user-scalable=no>
+    <link rel="stylesheet" href="../static/index.css">
+  
   </head>
   <body>
     <h1>Hello from index.html</h1>
-    <form action="/test" method="post">
-      <select name="tag" id="">
-        <option value="1">すべて</option>
-        <option value="2">1軍</option>
-        <option value="3">どーが</option>
+    <div id="app">
+      <select v-model="tag" name="tag" id="">
+        <option value="全て">全て</option>
+        <option value="1軍">1軍</option>
+        <option value="どーが">どーが</option>
         <option value="4"></option>
       </select>
-      <select name="num" id="">
+      <select v-model="num" name="num" id="">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -24,11 +27,24 @@
         <option value="9">9</option>
         <option value="10">10</option>
       </select>
-      <button type='submit'>開く</button>
+      <button v-on:click="open">開く</button>
+    <form action="/test" method="post">
     </form>
+
     <form action="/refresh" method="post">
       <button type='submit'>更新</button>
     </form>
-    <a href="https://www.nicovideo.jp/my/top" target='_blank'>クサクサ</a>
+    <ul class="history">
+      <li v-for="item in title">
+        <a v-bind:href="item" target="_brank">[[ item ]]</a>
+      </li>
+    </ul>
+    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="../static/index.js"></script>
+
   </body>
 </html>

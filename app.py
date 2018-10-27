@@ -3,7 +3,7 @@ import requests
 import random
 import json
 import webbrowser
-from flask import Flask,render_template,request,redirect,url_for
+from flask import Flask,render_template,request,redirect,url_for,jsonify
 
 app = Flask(__name__)
 
@@ -27,23 +27,30 @@ def index():
 def test():
   print(request.method)
   if request.method == 'POST':
-    open_number = request.form['num']
-    print(request.form['num'])
-    f = open('bookmark.json','r')
+
+    # payload = {'consumer_key': consumer_key,'access_token': access_token , 'state':'all','sort':'newest','detailType':'complete'}
+    # r=requests.post('https://getpocket.com/v3/get',data=payload)
+    # l = r.json()
+    # values = random.sample([a[1] for a in list(l['list'].items())],int(3))
+    f = open('assets/bookmark.json','r')
     l = json.load(f)
-    print(f)
-    # values = random.sample([a for a in list(l['list'].items()) if a[0] == 'どーが'],int(open_number))
-    values = random.sample([a for a in list(l['list'].items())],int(open_number))
-    print(values)
-    for k in values:
-      print(k[1]['resolved_url'])
-      print(k[1]['tags'])
-      webbrowser.open(k[1]['resolved_url'],new=2)
-    # url = values[1]['resolved_url']
-    # url = values.items()['resolved_url']
-    # print(url)
-    # webbrowser.open(url,new=2)
-    return redirect(url_for('index'))
+    # すべてとそれ以外で場合分け
+    if request.json['tag'] == '全て':
+      print('aaaaa')
+      values = random.sample([a[1] for a in list(l['list'].items())],int(request.json['number']))
+      return jsonify(values)
+    else:
+      arr = []
+      print('eeeeee')
+      for k in l['list'].items():
+        if request.json['tag'] in k[1]['tags']:
+          if k[1]['tags'][request.json['tag']]['tag'] == request.json['tag']:
+            print(k[1]['tags'])
+            arr.append(k[1])        
+          else:
+            print('aeuhetase')
+    values = random.sample(arr,int(request.json['number']))
+    return jsonify(values)
   else:
     return redirect(url_for('index'))
 

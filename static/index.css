@@ -1,0 +1,10 @@
+.history  {
+  max-width: 100%;
+  
+}
+
+li {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
