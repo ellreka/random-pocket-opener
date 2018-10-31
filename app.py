@@ -12,22 +12,26 @@ app = Flask(__name__)
 app.secret_key = 'hogehoge'
 
 consumer_key = '81334-d57a6937c20cab86963d47e2'
-redirect_uri = 'https://random-pocket-opener.herokuapp.com//callback'
+# redirect_uri = 'http://localhost:5000/callback'
+redirect_uri = 'https://random-pocket-opener.herokuapp.com/callback'
+
 
 
 @app.route('/',methods=['GET','POST'])
 def index():
-  print(request.method)
   access_token = request.cookies.get('access_token')
   if access_token:
     print(access_token)
-    path = "assets/bookmark.json"
+    path = "bookmark.json"
+    print(os.path.exists(path))
     if os.path.exists(path):
-      with open("assets/bookmark.json", 'r') as f:
+      with open("bookmark.json", 'r') as f:
         l = json.load(f)
         tags = l[0]
         return render_template('index.html',tags=tags)
     else:
+      # with open("bookmark.json", 'w') as f:
+      #   print(f)
       return render_template('index.html')
   else:
     return render_template('login.html')
@@ -40,7 +44,6 @@ def index():
 @app.route('/login',methods=['GET','POST'])
 def login():
   if request.method == 'POST':
-    print("うんち")
     request_token = Pocket.get_request_token(consumer_key=consumer_key, redirect_uri=redirect_uri)
     print(request_token)
     session['request_token'] = request_token
@@ -67,13 +70,13 @@ def callback():
 @app.route('/open', methods=['GET','POST'])
 def pick():
   if request.method == 'POST':
-    with open("assets/bookmark.json", 'r') as f:
+    with open("bookmark.json", 'r') as f:
       l = json.load(f)
     all_list = []
     if request.form['tags'] == 'ALL':
       for a in l[1]:
         all_list.append(a)
-      ramdom_list = random.sample(all_list, 5)
+      ramdom_list = random.sample(all_list, request.form['num'])
       
       for u in ramdom_list:
         print(u['url'])
@@ -87,7 +90,7 @@ def pick():
         for b in a['tag']:
           if b == request.form['tags']:
             all_list.append(a)
-      ramdom_list = random.sample(all_list, 5)
+      ramdom_list = random.sample(all_list, int(request.form['num']))
       for u in ramdom_list:
         webbrowser.open(u['url'])
 
@@ -173,7 +176,7 @@ def refresh():
   simple_pocket_list.append(page_data_list)
   print(simple_pocket_list)
 
-  with open("assets/bookmark.json", 'w') as f:
+  with open("bookmark.json", 'w') as f:
     json.dump(simple_pocket_list, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
   return redirect(url_for('index'))
 
