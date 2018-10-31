@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.secret_key = 'hogehoge'
 
 consumer_key = '81334-d57a6937c20cab86963d47e2'
-redirect_uri = 'http://localhost:5000/callback'
+redirect_uri = 'https://random-pocket-opener.herokuapp.com//callback'
 
 
 @app.route('/',methods=['GET','POST'])
