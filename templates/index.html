@@ -9,7 +9,7 @@
     </script>
   </head>
   <body>
-    <h1>Hello from index.html</h1>
+    <h1>Random Pick for Pocket</h1>
     <div id="app">
       <form action="/open" method="post">
       <select name="tags" id="">
@@ -41,8 +41,11 @@
     <form action="/refresh" method="post">
       <button type='submit'>更新</button>
     </form>
+    <form action="/logout" method="post">
+      <button type='submit'>ログアウト</button>
+    </form>
     <!-- <button v-on:click="refresh" type='submit'>更新</button> -->
-
+    現在のpocket数：
     <ul class="history">
       <li v-for="item in history.reverse()">
         <a v-bind:href="item.url" target="_brank">[[ item.title ]]</a>

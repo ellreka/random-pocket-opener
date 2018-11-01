@@ -51,8 +51,15 @@ def login():
     print(auth_url)
     return redirect(auth_url)
   else:
-    return redirect(url_for(index))
+    return redirect(url_for('index'))
 
+@app.route('/logout',methods=['GET','POST'])
+def logout():
+  if request.method == 'POST':
+    print('ログアウト')
+    return redirect(url_for('index'))
+  else:
+    return redirect(url_for('index'))
 
 @app.route('/callback', methods=['GET','POST'])
 def callback():
@@ -76,7 +83,7 @@ def pick():
     if request.form['tags'] == 'ALL':
       for a in l[1]:
         all_list.append(a)
-      ramdom_list = random.sample(all_list, request.form['num'])
+      ramdom_list = random.sample(all_list, int(request.form['num']))
       
       for u in ramdom_list:
         print(u['url'])
@@ -90,13 +97,12 @@ def pick():
         for b in a['tag']:
           if b == request.form['tags']:
             all_list.append(a)
+      print(all_list)
+      print(request.form['num'])
       ramdom_list = random.sample(all_list, int(request.form['num']))
       for u in ramdom_list:
+        print(u['url'])
         webbrowser.open(u['url'])
-
-      
-
-    # return jsonify(l)
     return redirect(url_for('index'))
   else:
     return redirect(url_for('index'))
