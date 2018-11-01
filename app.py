@@ -84,11 +84,10 @@ def pick():
       for a in l[1]:
         all_list.append(a)
       ramdom_list = random.sample(all_list, int(request.form['num']))
-      
-      for u in ramdom_list:
-        print(u['url'])
-        webbrowser.open(u['url'])
-      print('ALL')
+      # for u in ramdom_list:
+      #   print(u['url'])
+      #   webbrowser.open(u['url'])
+      # print('ALL')
     elif request.form['tags'] == 'NoTag':
       print('NoTag')
     else:
@@ -103,6 +102,7 @@ def pick():
       for u in ramdom_list:
         print(u['url'])
         webbrowser.open(u['url'])
+    return jsonify(ramdom_list)
     return redirect(url_for('index'))
   else:
     return redirect(url_for('index'))
