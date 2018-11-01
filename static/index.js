@@ -3,8 +3,8 @@ const app = new Vue({
   delimiters: ['[[', ']]'],
   data:{
     formData:{
-      tags:'ALL',
-      num:1
+      tags:'',
+      num:''
     }
   },
   methods:{

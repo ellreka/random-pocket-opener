@@ -80,6 +80,7 @@ def pick():
     with open("bookmark.json", 'r') as f:
       l = json.load(f)
     all_list = []
+    print(request.json)
     if request.json['tags'] == 'ALL':
       for a in l[1]:
         all_list.append(a)
