@@ -2,14 +2,15 @@ const app = new Vue({
   el: '#app',
   delimiters: ['[[', ']]'],
   data:{
-    tags:'ALL',
-    num:1
-
+    formData:{
+      tags:'ALL',
+      num:1
+    }
   },
   methods:{
     open: function() {
       console.log(this.tags)
-      axios.post('/open',{tags:this.tags,num:this.num})
+      axios.post('/open',this.formData)
         .then(response => {
           console.log(response)
         })
