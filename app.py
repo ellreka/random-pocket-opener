@@ -20,23 +20,25 @@ redirect_uri = 'https://random-pocket-opener.herokuapp.com/callback'
 @app.route('/',methods=['GET','POST'])
 def index():
   access_token = request.cookies.get('access_token')
-  if access_token:
+  if not access_token == '':
     print(access_token)
     path = "bookmark.json"
     print(os.path.exists(path))
     if os.path.exists(path):
       with open("bookmark.json", 'r') as f:
         l = json.load(f)
-        tags = l[0]
-        return render_template('index.html',tags=tags)
+      tags = l[0]
+      updated = '2018/10/17'
+      article_len = len(l[1])
+      return render_template('index.html',tags=tags,article_len=article_len,updated=updated)
     else:
       # with open("bookmark.json", 'w') as f:
       #   print(f)
       return render_template('index.html')
   else:
     return render_template('login.html')
-  return render_template('login.html')
-  return render_template('index.html')
+  # return render_template('login.html')
+  # return render_template('index.html')
 
   
 
@@ -57,6 +59,10 @@ def login():
 def logout():
   if request.method == 'POST':
     print('ログアウト')
+    resp = make_response(redirect(url_for('index')))
+    resp.set_cookie('access_token', '')
+    os.remove("bookmark.json")
+    return resp
     return redirect(url_for('index'))
   else:
     return redirect(url_for('index'))
@@ -85,12 +91,13 @@ def pick():
       for a in l[1]:
         all_list.append(a)
       ramdom_list = random.sample(all_list, int(request.json['num']))
-      # for u in ramdom_list:
-      #   print(u['url'])
-      #   webbrowser.open(u['url'])
-      # print('ALL')
     elif request.json['tags'] == 'NoTag':
       print('NoTag')
+      for a in l[1]:
+        if not a['tag']:
+          print(a['tag'])
+          all_list.append(a)
+      ramdom_list = random.sample(all_list, int(request.json['num']))
     else:
       print(request.json['tags'])
       for a in l[1]:
@@ -100,9 +107,6 @@ def pick():
       print(all_list)
       print(request.json['num'])
       ramdom_list = random.sample(all_list, int(request.json['num']))
-      # for u in ramdom_list:
-      #   print(u['url'])
-      #   webbrowser.open(u['url'])
     return jsonify(ramdom_list)
     return redirect(url_for('index'))
   else:
