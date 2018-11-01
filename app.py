@@ -12,8 +12,8 @@ app = Flask(__name__)
 app.secret_key = 'hogehoge'
 
 consumer_key = '81334-d57a6937c20cab86963d47e2'
-# redirect_uri = 'http://localhost:5000/callback'
-redirect_uri = 'https://random-pocket-opener.herokuapp.com/callback'
+redirect_uri = 'http://localhost:5000/callback'
+# redirect_uri = 'https://random-pocket-opener.herokuapp.com/callback'
 
 
 
@@ -35,8 +35,8 @@ def index():
       return render_template('index.html')
   else:
     return render_template('login.html')
-  # return render_template('login.html')
-  # return render_template('index.html')
+  return render_template('login.html')
+  return render_template('index.html')
 
   
 
@@ -100,9 +100,9 @@ def pick():
       print(all_list)
       print(request.json['num'])
       ramdom_list = random.sample(all_list, int(request.json['num']))
-      for u in ramdom_list:
-        print(u['url'])
-        webbrowser.open(u['url'])
+      # for u in ramdom_list:
+      #   print(u['url'])
+      #   webbrowser.open(u['url'])
     return jsonify(ramdom_list)
     return redirect(url_for('index'))
   else:

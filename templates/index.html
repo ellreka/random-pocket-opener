@@ -34,7 +34,7 @@
         <option value="10">10</option>
       </select>
         <!-- <button type='submit'>オープン</button> -->
-      <button v-on:click="open" type='submit'>オープン</button>
+      <button v-on:click="pick" type='submit'>オープン</button>
       <!-- </form> -->
 
 
@@ -46,18 +46,58 @@
     </form>
     <!-- <button v-on:click="refresh" type='submit'>更新</button> -->
     現在のpocket数：
-    <ul class="history">
+    <!-- <ul class="history">
       <li v-for="item in history.reverse()">
         <a v-bind:href="item.url" target="_brank">[[ item.title ]]</a>
       </li>
-    </ul>
+    </ul> -->
     </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="../static/index.js"></script>
+    <script>
+const app = new Vue({
+  el: '#app',
+  delimiters: ['[[', ']]'],
+  data:{
+    formData:{
+      tags:'',
+      num:''
+    }
+  },
+  methods:{
+    pick: function() {
+      console.log(this.tags)
+      axios.post('/open',this.formData)
+        .then(response => {
+          console.log(response.data)
+          for(let i in response.data){
+            console.log(response.data[i]['url'])
+            window.open(response.data[i]['url'])
+          }
+        })
+      .catch(error => {
+        console.log(error);
+      })
+    },
+    refresh: function(){
+      axios.post('/refresh')
+        .then(response => {
+          console.log(response.data)
+        })
+      .catch(error => {
+        console.log(error);
+      })
+      getCookie()
+    }
+  }
+})
 
+
+
+    </script>
 
   </body>
 </html>
