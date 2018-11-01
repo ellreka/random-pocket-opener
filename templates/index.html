@@ -11,8 +11,8 @@
   <body>
     <h1>Random Pick for Pocket</h1>
     <div id="app">
-      <form action="/open" method="post">
-      <select name="tags" id="">
+      <!-- <form action="/open" method="post"> -->
+      <select v-model="tags" name="tags" id="">
             <option value="ALL">ALL</option>
         {% for t in tags %}
             <option value="{{t}}">{{t}}</option>
@@ -21,7 +21,7 @@
       </select>
 
 
-      <select name="num" id="">
+      <select v-model="num" name="num" id="">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -35,7 +35,7 @@
       </select>
         <!-- <button type='submit'>オープン</button> -->
       <button v-on:click="open" type='submit'>オープン</button>
-      </form>
+      <!-- </form> -->
 
 
     <form action="/refresh" method="post">

@@ -80,25 +80,25 @@ def pick():
     with open("bookmark.json", 'r') as f:
       l = json.load(f)
     all_list = []
-    if request.form['tags'] == 'ALL':
+    if request.json['tags'] == 'ALL':
       for a in l[1]:
         all_list.append(a)
-      ramdom_list = random.sample(all_list, int(request.form['num']))
+      ramdom_list = random.sample(all_list, int(request.json['num']))
       # for u in ramdom_list:
       #   print(u['url'])
       #   webbrowser.open(u['url'])
       # print('ALL')
-    elif request.form['tags'] == 'NoTag':
+    elif request.json['tags'] == 'NoTag':
       print('NoTag')
     else:
-      print(request.form['tags'])
+      print(request.json['tags'])
       for a in l[1]:
         for b in a['tag']:
-          if b == request.form['tags']:
+          if b == request.json['tags']:
             all_list.append(a)
       print(all_list)
-      print(request.form['num'])
-      ramdom_list = random.sample(all_list, int(request.form['num']))
+      print(request.json['num'])
+      ramdom_list = random.sample(all_list, int(request.json['num']))
       for u in ramdom_list:
         print(u['url'])
         webbrowser.open(u['url'])
