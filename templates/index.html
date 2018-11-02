@@ -4,23 +4,15 @@
   <head>
     <meta name="viewport" content="width=400,initial-scale=1.0" user-scalable=no>
     <link rel="stylesheet" href="../static/index.css">
-    <script>
-
-    </script>
   </head>
   <body>
     <h1>Random Pick for Pocket</h1>
     <div id="app">
-      <!-- <form action="/open" method="post"> -->
       <select v-model="formData.tags" name="tags" id="">
             <option value="ALL">ALL</option>
-        {% for t in tags %}
-            <option value="{{t}}">{{t}}</option>
-        {% endfor %}
+            <option v-for="t in allTag">[[t]]</option>
             <option value="NoTag">NoTag</option>
       </select>
-
-
       <select v-model="formData.num" name="num" id="">
         <option value="1">1</option>
         <option value="2">2</option>
@@ -33,72 +25,24 @@
         <option value="9">9</option>
         <option value="10">10</option>
       </select>
-        <!-- <button type='submit'>オープン</button> -->
-      <button v-on:click="pick" type='submit'>オープン</button>
-      <!-- </form> -->
+      <button v-on:click="pick" type='submit'>open</button>
+      <button v-on:click="refresh" type='submit'>update</button>
+      <button v-on:click="logout" type='submit'>logout</button>
 
-
-    <form action="/refresh" method="post">
-      <button type='submit'>更新</button>
-    </form>
-    <form action="/logout" method="post">
-      <button type='submit'>ログアウト</button>
-    </form>
-    <!-- <button v-on:click="refresh" type='submit'>更新</button> -->
-    現在のpocket数：{{article_len}}
-    最新の更新日：{{updated}}
-    <!-- <ul class="history">
-      <li v-for="item in history.reverse()">
-        <a v-bind:href="item.url" target="_brank">[[ item.title ]]</a>
-      </li>
-    </ul> -->
-    </div>
+      <p>現在のpocket数：{{article_len}}</p>
+      <p>最新の更新日：{{updated}}</p>
+      <h3>History</h3>
+      <ul class="history">
+        <li v-for="item in history.reverse()">
+          ・<a v-bind:href="item.url" target="_brank">[[ item.title ]]</a>
+        </li>
+      </ul>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/lovefield/2.1.12/lovefield.min.js"></script> -->
     <script src="../static/index.js"></script>
-    <script>
-const app = new Vue({
-  el: '#app',
-  delimiters: ['[[', ']]'],
-  data:{
-    formData:{
-      tags:'ALL',
-      num:1
-    }
-  },
-  methods:{
-    pick: function() {
-      console.log(this.tags)
-      axios.post('/open',this.formData)
-        .then(response => {
-          console.log(response.data)
-          for(let i in response.data){
-            console.log(response.data[i]['url'])
-            window.open(response.data[i]['url'])
-          }
-        })
-      .catch(error => {
-        console.log(error);
-      })
-    },
-    refresh: function(){
-      axios.post('/refresh')
-        .then(response => {
-          console.log(response.data)
-        })
-      .catch(error => {
-        console.log(error);
-      })
-      getCookie()
-    }
-  }
-})
-
-
-
-    </script>
-
   </body>
 </html>
