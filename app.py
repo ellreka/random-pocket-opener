@@ -12,8 +12,8 @@ app = Flask(__name__)
 app.secret_key = 'hogehoge'
 
 consumer_key = '81334-d57a6937c20cab86963d47e2'
-# redirect_uri = 'http://localhost:5000/callback'
-redirect_uri = 'https://random-pocket-opener.herokuapp.com/callback'
+redirect_uri = 'http://localhost:5000/callback'
+# redirect_uri = 'https://random-pocket-opener.herokuapp.com/callback'
 
 
 
@@ -22,8 +22,10 @@ def index():
   access_token = request.cookies.get('access_token')
   print(access_token)
   if not access_token == None:
+    print(access_token)
     return render_template('index.html')
   else:
+    print(access_token)
     return render_template('login.html')
 
   
@@ -45,8 +47,6 @@ def login():
 def logout():
   if request.method == 'POST':
     print('ログアウト')
-    # resp = make_response(redirect(url_for('index')))
-    # resp.set_cookie('access_token', '')
     return redirect(url_for('index'))
   else:
     return redirect(url_for('index'))
@@ -75,8 +75,8 @@ def pick():
     return redirect(url_for('index'))
 
 
-@app.route('/refresh', methods=['POST'])
-def refresh():
+@app.route('/update', methods=['POST'])
+def update():
   access_token = request.cookies.get('access_token')
   print(access_token)
   payload = {'consumer_key': consumer_key,'access_token': access_token ,'state':'all','contentType':'article','sort':'newest','detailType':'complete'}

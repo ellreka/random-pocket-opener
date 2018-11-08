@@ -8,35 +8,39 @@
   <body>
     <h1>Random Pick for Pocket</h1>
     <div id="app">
-      <select v-model="formData.tags" name="tags" id="">
-            <option value="ALL">ALL</option>
-            <option v-for="t in allTag">[[t]]</option>
-            <option value="NoTag">NoTag</option>
-      </select>
-      <select v-model="formData.num" name="num" id="">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-      </select>
-      <button v-on:click="pick" type='submit'>open</button>
-      <button v-on:click="refresh" type='submit'>update</button>
-      <button v-on:click="logout" type='submit'>logout</button>
-
-      <p>現在のpocket数：{{article_len}}</p>
-      <p>最新の更新日：{{updated}}</p>
-      <h3>History</h3>
-      <ul class="history">
-        <li v-for="item in history.reverse()">
-          ・<a v-bind:href="item.url" target="_brank">[[ item.title ]]</a>
-        </li>
-      </ul>
+      <div v-show="loading">
+        <img src="../static/loading.gif" alt="">
+      </div>
+      <div v-show="!loading">
+        <input type="text">
+        <select v-model="formData.tags" name="tags" id="">
+              <option value="ALL">ALL</option>
+              <option value="NoTag">NoTag</option>
+              <option v-for="t in allTag">[[t]]</option>
+        </select>
+        <select v-model="formData.num" name="num" id="">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+        <button v-on:click="pick" type='submit'>open</button>
+        <form action="/logout" v-on:click="logout" method="POST">
+          <a href="">logout</a>                
+        </form>
+        <h3>History</h3>
+        <ul class="history">
+          <li v-for="item in history">
+            ・<a v-bind:href="item.url" target="_brank">[[ item.title ]]</a>
+          </li>
+        </ul>
+      </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
