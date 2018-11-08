@@ -12,8 +12,9 @@ app = Flask(__name__)
 app.secret_key = 'hogehoge'
 
 consumer_key = '81334-d57a6937c20cab86963d47e2'
-redirect_uri = 'http://localhost:5000/callback'
-# redirect_uri = 'https://random-pocket-opener.herokuapp.com/callback'
+# redirect_uri = 'http://localhost:5000/callback'
+redirect_uri = 'https://random-pocket-opener.herokuapp.com/callback'
+
 
 
 
@@ -45,11 +46,8 @@ def login():
 
 @app.route('/logout',methods=['GET','POST'])
 def logout():
-  if request.method == 'POST':
-    print('ログアウト')
-    return redirect(url_for('index'))
-  else:
-    return redirect(url_for('index'))
+  return redirect(url_for('index'))
+
 
 @app.route('/callback', methods=['GET','POST'])
 def callback():
@@ -68,21 +66,26 @@ def callback():
 def pick():
   if request.method == 'POST':
     print(request.json)
-    ramdom_list = random.sample(request.json["article"], int(request.json["num"]))
-    return jsonify(ramdom_list)
-    return redirect(url_for('index'))
+    if len(request.json["article"]) > int(request.json["num"]):
+      ramdom_list = random.sample(request.json["article"], int(request.json["num"]))
+      return jsonify(ramdom_list)
+      return redirect(url_for('index'))
+    else:
+      ramdom_list = random.sample(request.json["article"], len(request.json["article"]))
+      return jsonify(ramdom_list)
+      return redirect(url_for('index'))
   else:
     return redirect(url_for('index'))
 
 
-@app.route('/update', methods=['POST'])
+@app.route('/update', methods=['GET','POST'])
 def update():
   access_token = request.cookies.get('access_token')
   print(access_token)
   payload = {'consumer_key': consumer_key,'access_token': access_token ,'state':'all','contentType':'article','sort':'newest','detailType':'complete'}
   r=requests.post('https://getpocket.com/v3/get',data=payload)
   all_pocket = r.json()
-  simple_pocket_list = []
+  # simple_pocket_list = []
   page_data_list = []
   tags_list = []
   for a in all_pocket['list'].items():
@@ -95,8 +98,8 @@ def update():
     for t in list(a[1].setdefault('tags','')):
       tags_list.append(t)
   tags_list = list(set(tags_list))
-  simple_pocket_list.append(tags_list)
-  simple_pocket_list.append(page_data_list)
+  # simple_pocket_list.append(tags_list)
+  # simple_pocket_list.append(page_data_list)
   return jsonify(page_data_list,tags_list)
   return redirect(url_for('index'))
 

@@ -1,6 +1,6 @@
 <!-- index.html -->
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
   <head>
     <meta name="viewport" content="width=400,initial-scale=1.0" user-scalable=no>
     <link rel="stylesheet" href="../static/index.css">
@@ -12,12 +12,19 @@
         <img src="../static/loading.gif" alt="">
       </div>
       <div v-show="!loading">
-        <input type="text">
+        <form action="/logout">
+          <button v-on:click="logout" type="submit">logout</button>
+        </form>
+        <br>
+        <label for="words">Word(β)：</label>
+        <input type="text" name="words" v-model="formData.words">
+        <label for="tags">Tag：</label>
         <select v-model="formData.tags" name="tags" id="">
               <option value="ALL">ALL</option>
               <option value="NoTag">NoTag</option>
               <option v-for="t in allTag">[[t]]</option>
         </select>
+        <label for="num">Number：</label>
         <select v-model="formData.num" name="num" id="">
           <option value="1">1</option>
           <option value="2">2</option>
@@ -31,9 +38,6 @@
           <option value="10">10</option>
         </select>
         <button v-on:click="pick" type='submit'>open</button>
-        <form action="/logout" v-on:click="logout" method="POST">
-          <a href="">logout</a>                
-        </form>
         <h3>History</h3>
         <ul class="history">
           <li v-for="item in history">
@@ -46,7 +50,6 @@
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/lovefield/2.1.12/lovefield.min.js"></script> -->
     <script src="../static/index.js"></script>
   </body>
 </html>

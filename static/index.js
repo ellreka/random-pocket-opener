@@ -21,14 +21,13 @@ const firstEvent = (db) =>{
       app.allTag.push(val.tag)
     })
     app.loading = false
-    // db.close()
 
   })
   .catch(error => {
     console.log(error);
   })
 }
-// firstEvent(db)
+firstEvent(db)
 
 
 
@@ -39,57 +38,54 @@ const app = new Vue({
   data:{
     formData:{
       tags:'ALL',
-      num:1
+      num:1,
+      words:''
     },
     allTag:[],
     history:[],
-    // loading:true
-    loading:false
+    loading:true
+    // loading:false
 
 
   },
   methods:{
-    pick: function ()  {
-      db.version(1).stores({
-        articles: "title, url, tag",
-        tags: "tag"
-      });
+    pick:async function ()  {
+      // db.version(1).stores({
+      //   articles: "title, url, tag",
+      //   tags: "tag"
+      // });
+      var arr_articles = []
+      if(this.formData["tags"] == "ALL"){
+        await db.articles.filter(article => article.title.indexOf(this.formData.words)!=-1).each(function(t){
+          console.log(t)
+          arr_articles.push(t)
+        })
+      }else if(this.formData["tags"] == "NoTag"){
+        await db.articles.where("tag").equals("").filter(article => article.title.indexOf(this.formData.words)!=-1).each(function(t){
+          arr_articles.push(t)
+          console.log(t)
+        })
+      }else{
+        var regex = RegExp(this.formData["tags"])
+        await db.articles.filter(article => regex.test(article.tag)).filter(article => article.title.indexOf(this.formData.words)!=-1).each(function(t){
+          arr_articles.push(t)
+          console.log(t)
+        })
+      }
       console.log(db)
-      db.articles.filter(article => article.title.indexOf("美少女")!=-1).each(function(val){
-        console.log(val)
+      console.log(arr_articles)
+      axios.post('/open',{"article":arr_articles,"num":this.formData["num"]})
+        .then(response => {
+          console.log(response.data)
+          for(let i in response.data){
+            console.log(response.data[i]['url'])
+            this.history.push(response.data[i])
+            window.open(response.data[i]['url'])
+          }
+        })
+      .catch(error => {
+        console.log(error);
       })
-      // var arr_articles = []
-      // if(this.formData["tags"] == "ALL"){
-      //   await db.articles.each(function(t){
-      //     arr_articles.push(t)
-      //     console.log(t)
-      //   })
-      // }else if(this.formData["tags"] == "NoTag"){
-      //   await db.articles.where("tag").equals("").each(function(t){
-      //     arr_articles.push(t)
-      //     console.log(t)
-      //   })
-      // }else{
-      //   var regex = RegExp(this.formData["tags"])
-      //   await db.articles.filter(article => regex.test(article.tag)).each(function(t){
-      //     arr_articles.push(t)
-      //     console.log(t)
-      //   })
-      // }
-      // console.log(db)
-      // console.log(arr_articles)
-      // axios.post('/open',{"article":arr_articles,"num":this.formData["num"]})
-      //   .then(response => {
-      //     console.log(response.data)
-      //     for(let i in response.data){
-      //       console.log(response.data[i]['url'])
-      //       this.history.push(response.data[i])
-      //       window.open(response.data[i]['url'])
-      //     }
-      //   })
-      // .catch(error => {
-      //   console.log(error);
-      // })
     },
     update: function(){
       axios.post('/update')
@@ -122,15 +118,10 @@ const app = new Vue({
       Dexie.delete('MyDatabase');
       Dexie.delete('__dbnames');
       document.cookie = "access_token=; max-age=0";
-      // axios.post('/logout')
-      //   .then(response => {
-      //     console.log(response)
-      //     console.log('sucess!')
-
-      //   })
-      //   .catch(error => {
-      //     console.log('error:'+error);
-      //   })
+      axios.post('/logout')
+        .catch(error => {
+          console.log('error:'+error);
+        })
     }
   }
 })
