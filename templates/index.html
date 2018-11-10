@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
   </head>
   <body>
     <h1 class="ui center aligned header">Random Pocket Opener</h1>
@@ -18,6 +17,7 @@
         <div class="ui text loader">Loading</div>
       </div>
       <div v-show="!loading">
+        {{test}}
         <div class="ui form">
           <div class="inline field">
           <label for="tags">Tag：</label>
@@ -52,8 +52,8 @@
           </div>
           <br>
           <button v-on:click="pick" type='submit' class="ui pink button">open</button>
-          <form action="/logout" id="logout">
-            <a href="" v-on:click="logout">logout</a>
+          <form id="logout">
+            <a href="https://getpocket.com/connected_applications">logout</a>
           </form>
         </div>
         <div>

@@ -1,5 +1,5 @@
 const firstEvent = (app) =>{
-  axios.post('/update')
+  axios.get('/update')
   .then(response => {
     console.log(response.data)
     app.allTag = response.data[1]
@@ -57,17 +57,11 @@ const app = new Vue({
     })
     },
     logout: function(){
-      document.cookie = "access_token=; max-age=0";
       axios.post('/logout')
       .catch(error => {
         console.log('error:'+error);
       })
     }
-  },
-  computed:{
-    // ReverseHistory:function(){
-    //   return this.history.reverse()
-    // }
   }
 })
 

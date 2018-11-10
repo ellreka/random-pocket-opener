@@ -20,13 +20,15 @@ redirect_uri = 'https://random-pocket-opener.herokuapp.com/callback'
 @app.route('/',methods=['GET','POST'])
 def index():
   access_token = request.cookies.get('access_token')
-  print(access_token)
-  if not access_token == None:
-    print(access_token)
+  payload = {'consumer_key': consumer_key,'access_token': access_token}
+  r=requests.post('https://getpocket.com/v3/get',data=payload)
+  print("ステータス:{}".format(r.status_code))
+  if r.status_code == 200:
     return render_template('index.html')
   else:
-    print(access_token)
-    return render_template('login.html')
+    resp = make_response(render_template('login.html'))
+    resp.set_cookie('access_token', '', expires=0) 
+    return resp
 
 @app.route('/login',methods=['GET','POST'])
 def login():
@@ -40,11 +42,6 @@ def login():
   else:
     return redirect(url_for('index'))
 
-@app.route('/logout',methods=['GET','POST'])
-def logout():
-  return redirect(url_for('index'))
-
-
 @app.route('/callback', methods=['GET','POST'])
 def callback():
   request_token = session.get('request_token')
@@ -52,11 +49,9 @@ def callback():
   user_credentials = Pocket.get_credentials(consumer_key=consumer_key, code=request_token)
 
   access_token = user_credentials['access_token']
-
   resp = make_response(redirect(url_for('index')))
   resp.set_cookie('access_token', access_token)
   return resp
-  return redirect(url_for('index'))
 
 @app.route('/open', methods=['GET','POST'])
 def pick():
@@ -69,7 +64,7 @@ def pick():
     else:
       ramdom_list = random.sample(request.json["article"], len(request.json["article"]))
       return jsonify(ramdom_list)
-      return redirect(url_for('index'))
+      return render_template('index.html')
   else:
     return redirect(url_for('index'))
 
@@ -78,10 +73,11 @@ def pick():
 def update():
   access_token = request.cookies.get('access_token')
   print(access_token)
+
   payload = {'consumer_key': consumer_key,'access_token': access_token ,'state':'all','contentType':'article','sort':'newest','detailType':'complete'}
   r=requests.post('https://getpocket.com/v3/get',data=payload)
+  print("ステータス:{}".format(r.status_code))
   all_pocket = r.json()
-  # simple_pocket_list = []
   page_data_list = []
   tags_list = []
   for a in all_pocket['list'].items():
@@ -94,10 +90,9 @@ def update():
     for t in list(a[1].setdefault('tags','')):
       tags_list.append(t)
   tags_list = list(set(tags_list))
-  # simple_pocket_list.append(tags_list)
-  # simple_pocket_list.append(page_data_list)
   return jsonify(page_data_list,tags_list)
-  return redirect(url_for('index'))
+  return render_template('index.html')
+
 
 
 if __name__ == '__main__':
