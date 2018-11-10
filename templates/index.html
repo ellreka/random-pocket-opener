@@ -6,48 +6,64 @@
     <link rel="stylesheet" href="../static/index.css">
   </head>
   <body>
-    <h1>Random Pick for Pocket</h1>
-    <div id="app">
-      <div v-show="loading">
-        <img src="../static/loading.gif" alt="">
+    <h1 class="ui center aligned header">Random Pocket Opener</h1>
+    <div id="app" class="ui attached fluid">
+      <div class="ui active inverted dimmer" v-show="loading" id="loading">
+        <div class="ui text loader">Loading</div>
       </div>
       <div v-show="!loading">
-        <form action="/logout">
-          <button v-on:click="logout" type="submit">logout</button>
-        </form>
-        <br>
-        <label for="words">Word(β)：</label>
-        <input type="text" name="words" v-model="formData.words">
-        <label for="tags">Tag：</label>
-        <select v-model="formData.tags" name="tags" id="">
-              <option value="ALL">ALL</option>
-              <option value="NoTag">NoTag</option>
-              <option v-for="t in allTag">[[t]]</option>
-        </select>
-        <label for="num">Number：</label>
-        <select v-model="formData.num" name="num" id="">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-        </select>
-        <button v-on:click="pick" type='submit'>open</button>
-        <h3>History</h3>
+        <div class="ui form">
+          <div class="inline field">
+          <label for="tags">Tag：</label>
+          <select v-model="formData.tags" name="tags" id="">
+                <option value="ALL">ALL</option>
+                <option value="NoTag">NoTag</option>
+                <option v-for="t in allTag">[[t]]</option>
+          </select>
+          </div>
+          <div class="inline field">
+          <label for="words">Word：</label>
+          <input type="text" name="words" v-model="formData.words">
+          </div>
+          <div class="inline field">
+          <label for="num">Number：</label>
+          <select v-model="formData.num" name="num" id="">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+          </div>
+          <div class="inline field">
+            <input type="checkbox" name="noopen" id="noopen" v-model="checked">
+            <label for="noopen">open link</label>
+          </div>
+          <br>
+          <button v-on:click="pick" type='submit' class="ui pink button">open</button>
+          <form action="/logout" id="logout">
+            <a href="" v-on:click="logout">logout</a>
+          </form>
+        </div>
+        <div>
+        <h3 class="ui horizontal header divider">History</h3>
         <ul class="history">
           <li v-for="item in history">
             ・<a v-bind:href="item.url" target="_brank">[[ item.title ]]</a>
           </li>
         </ul>
       </div>
+      </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
     <script src="../static/index.js"></script>

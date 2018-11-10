@@ -1,22 +1,21 @@
 import os
+from os.path import join, dirname
+from dotenv import load_dotenv
 import requests
 import random
 import json
-import webbrowser
-import time
 from pocket import Pocket
-from datetime import datetime
 from flask import Flask,render_template,request,redirect,url_for,jsonify,session,make_response
 
 app = Flask(__name__)
-app.secret_key = 'hogehoge'
 
-consumer_key = '81334-d57a6937c20cab86963d47e2'
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
+app.secret_key = 'randompocketopener'
+consumer_key = os.environ['CONSUMER_KEY']
 # redirect_uri = 'http://localhost:5000/callback'
 redirect_uri = 'https://random-pocket-opener.herokuapp.com/callback'
-
-
-
 
 @app.route('/',methods=['GET','POST'])
 def index():
@@ -28,9 +27,6 @@ def index():
   else:
     print(access_token)
     return render_template('login.html')
-
-  
-
 
 @app.route('/login',methods=['GET','POST'])
 def login():

@@ -1,6 +1,21 @@
+h1.ui.center.header {
+  margin-top: 3em;
+}
+
+#loading {
+  margin-top: 3em;
+}
+
+.ui .form {
+  margin-left: 3em;
+}
 .history  {
   max-width: 100%;
-  
+}
+
+#logout {
+  text-align: right;
+  margin-right: 3em;
 }
 
 li {
