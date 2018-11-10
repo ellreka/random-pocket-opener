@@ -1,7 +1,6 @@
 const firstEvent = (app) =>{
   axios.get('/update')
   .then(response => {
-    console.log(response.data)
     app.allTag = response.data[1]
     app.articles = response.data[0]
     app.loading = false
@@ -39,10 +38,8 @@ const app = new Vue({
     }else{
       arr_articles = this.articles.filter(a => a.tag.some(t => t==this.formData["tags"]) &&  a.title.indexOf(this.formData.words)!=-1)
     }
-    console.log(arr_articles)
     axios.post('/open',{"article":arr_articles,"num":this.formData["num"]})
     .then(response => {
-      console.log(response.data)
       for(let i in response.data){
         if (this.checked){
           this.history.unshift(response.data[i])
@@ -55,12 +52,6 @@ const app = new Vue({
     .catch(error => {
       console.log(error);
     })
-    },
-    logout: function(){
-      axios.post('/logout')
-      .catch(error => {
-        console.log('error:'+error);
-      })
     }
   }
 })

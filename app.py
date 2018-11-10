@@ -34,10 +34,8 @@ def index():
 def login():
   if request.method == 'POST':
     request_token = Pocket.get_request_token(consumer_key=consumer_key, redirect_uri=redirect_uri)
-    print(request_token)
     session['request_token'] = request_token
     auth_url = Pocket.get_auth_url(code=request_token, redirect_uri=redirect_uri)
-    print(auth_url)
     return redirect(auth_url)
   else:
     return redirect(url_for('index'))
@@ -56,7 +54,6 @@ def callback():
 @app.route('/open', methods=['GET','POST'])
 def pick():
   if request.method == 'POST':
-    print(request.json)
     if len(request.json["article"]) > int(request.json["num"]):
       ramdom_list = random.sample(request.json["article"], int(request.json["num"]))
       return jsonify(ramdom_list)
@@ -72,11 +69,8 @@ def pick():
 @app.route('/update', methods=['GET','POST'])
 def update():
   access_token = request.cookies.get('access_token')
-  print(access_token)
-
   payload = {'consumer_key': consumer_key,'access_token': access_token ,'state':'all','contentType':'article','sort':'newest','detailType':'complete'}
   r=requests.post('https://getpocket.com/v3/get',data=payload)
-  print("ステータス:{}".format(r.status_code))
   all_pocket = r.json()
   page_data_list = []
   tags_list = []
