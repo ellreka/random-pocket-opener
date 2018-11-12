@@ -1,9 +1,14 @@
 const firstEvent = (app) =>{
   axios.get('/update')
   .then(response => {
-    app.allTag = response.data[1]
-    app.articles = response.data[0]
-    app.loading = false
+    if (response.data == 'NOTPOCKET'){
+      app.loading = false
+      app.message = '<div class="ui negative message">Pocketから記事を取得することができませんでした</div>'
+    }else{
+      app.allTag = response.data[1]
+      app.articles = response.data[0]
+      app.loading = false
+    }
   })
   .catch(error => {
     console.log(error);
@@ -19,6 +24,7 @@ const app = new Vue({
       num:1,
       words:''
     },
+    message:'',
     history:[],
     loading:true,
     articles:[],
@@ -40,14 +46,20 @@ const app = new Vue({
     }
     axios.post('/open',{"article":arr_articles,"num":this.formData["num"]})
     .then(response => {
-      for(let i in response.data){
-        if (this.checked){
-          this.history.unshift(response.data[i])
-          window.open(response.data[i]['url'])
-        }else{
-          this.history.unshift(response.data[i])
+      if(response.data.length !== 0){
+        for(let i in response.data){
+          if (this.checked){
+            this.history.unshift(response.data[i])
+            window.open(response.data[i]['url'])
+          }else{
+            this.history.unshift(response.data[i])
+          }
         }
+      this.message = ''
+      }else{
+        this.message = '<div class="ui negative message">一致する記事がありませんでした</div>'
       }
+
     })
     .catch(error => {
       console.log(error);
