@@ -14,8 +14,8 @@ load_dotenv(dotenv_path)
 
 app.secret_key = 'randompocketopener'
 consumer_key = os.environ['CONSUMER_KEY']
-redirect_uri = 'http://localhost:5000/callback'
-# redirect_uri = 'https://random-pocket-opener.herokuapp.com/callback'
+# redirect_uri = 'http://localhost:5000/callback'
+redirect_uri = 'https://random-pocket-opener.herokuapp.com/callback'
 
 @app.route('/',methods=['GET','POST'])
 def index():
