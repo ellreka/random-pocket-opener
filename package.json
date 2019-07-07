@@ -1,0 +1,26 @@
+{
+  "name": "random_pocket",
+  "version": "1.0.0",
+  "description": "test ver2",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ellreka/random-pocket-opener.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ellreka/random-pocket-opener/issues"
+  },
+  "homepage": "https://github.com/ellreka/random-pocket-opener#readme",
+  "devDependencies": {
+    "express-session": "^1.16.2"
+  },
+  "dependencies": {
+    "cookie": "^0.4.0",
+    "request": "^2.88.0"
+  }
+}
