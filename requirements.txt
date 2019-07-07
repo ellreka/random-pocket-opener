@@ -1,7 +1,0 @@
-Flask==1.0.2
-gunicorn==19.9.0
-Jinja2==2.10
-ngrok==0.0.1
-pocket==0.3.6
-requests==2.19.1
-python-dotenv==0.9.1
