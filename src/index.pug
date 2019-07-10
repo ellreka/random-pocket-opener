@@ -3,21 +3,36 @@ html
     head
         meta(charset="utf-8")
         meta(name="viewport", content="width=device-width, initial-scale=1")
+        link(rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/accordion.css")
         title random Pocket opener
     body
         script(src="https://unpkg.com/axios/dist/axios.min.js")
         script(type="text/javascript" src="/js/index.js")
-        h1 random Pocket opener
-        if logged_in==undefined
-            p ログインしていません
-            a(href='/login') login
-        else
-            p ログインしています
-            select(name="tag_list" id="tag")
-                each item in tag_list
-                    option(value=item) #{item}
-            input(type="text" id="search_word")
-            select(name="num_list" id="num")
-                - for (var i = 1; i < 11; i++)
-                    option(value=i) #{i}
-            button(onclick="openUrl();") open
+        div(class="ui main container")
+            h1(class="ui header") Random Pocket Opener
+            if logged_in==undefined
+                a(href='/login') login
+            else
+                table(class="ui table")
+                    tbody
+                        tr
+                            td タグ
+                            td
+                                select(name="tag_list" id="tag")
+                                    each item in tag_list
+                                        option(value=item) #{item}
+                        tr
+                            td ワード
+                            td
+                                input(type="text" id="search_word")
+                        tr
+                            td 一度に開くページ数
+                            td
+                                select(name="num_list" id="num")
+                                    - for (var i = 1; i < 11; i++)
+                                        option(value=i) #{i}
+                        tr
+                            td ページを開くか
+                            td
+                                input(type="checkbox" checked)
+                button(onclick="openUrl();") open
