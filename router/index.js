@@ -69,6 +69,10 @@ router
         res.cookie('access_token', access_token);
         res.redirect('/');
     })
+    .get('/logout', (req, res) => {
+        res.clearCookie('access_token')
+        res.redirect('/')
+    })
     .post('/pick', async (req,res) => {
         console.log(req.body)
         const cookies = cookie.parse(req.headers.cookie);
