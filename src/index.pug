@@ -9,10 +9,10 @@ html
         script(src="https://unpkg.com/axios/dist/axios.min.js")
         script(type="text/javascript" src="/js/index.js")
         div(class="container")
-            h3(class="ui header") Random Pocket Opener
-            span Pocketに保存されているアイテムをランダムに開きます。
+            h2(class="ui header") Random Pocket Opener
+            p Pocketに保存されているアイテムをランダムに開きます。
             if logged_in==undefined
-                a(href='/login') login
+                a(id="login" href='/login') #login
             else
                 table(class="table" border="1")
                     tbody

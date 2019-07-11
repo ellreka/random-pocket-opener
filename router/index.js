@@ -13,27 +13,32 @@ router
         const cookies = cookie.parse(req.headers.cookie);
         console.log(cookies.access_token);
         if(cookies.access_token) {
-        const get_pockets_json = await axios({
-            method: 'POST',
-            url: 'https://getpocket.com/v3/get',
-            params: {
-                consumer_key: consumer_key,
-                access_token: cookies.access_token,
-                contentType: 'article',
-                detailType: 'complete'
+            try {
+                const get_pockets_json = await axios({
+                    method: 'POST',
+                    url: 'https://getpocket.com/v3/get',
+                    params: {
+                        consumer_key: consumer_key,
+                        access_token: cookies.access_token,
+                        contentType: 'article',
+                        detailType: 'complete'
+                    }
+                })
+                const all_pockets = get_pockets_json['data']['list'];
+                const tags_array = []
+                for(var item in all_pockets) {
+                    for(var i in all_pockets[item]['tags']) {
+                        tags_array.push(all_pockets[item]['tags'][i]['tag'])
+                    }
+                }
+                const tag_list = tags_array.filter((elem, index, self) => self.indexOf(elem) === index)
+                tag_list.unshift('---','タグなし')
+                console.log(tag_list)
+                res.render('../src/index.pug',{logged_in:cookies.access_token,tag_list:tag_list});
+            } catch(e) {
+                console.log(e);
+                res.render('../src/index.pug',{logged_in:undefined})
             }
-        })
-        const all_pockets = get_pockets_json['data']['list'];
-        const tags_array = []
-        for(var item in all_pockets) {
-            for(var i in all_pockets[item]['tags']) {
-                tags_array.push(all_pockets[item]['tags'][i]['tag'])
-            }
-        }
-        const tag_list = tags_array.filter((elem, index, self) => self.indexOf(elem) === index)
-        tag_list.unshift('---','タグなし')
-        console.log(tag_list)
-            res.render('../src/index.pug',{logged_in:cookies.access_token,tag_list:tag_list});
         }else{
             res.render('../src/index.pug',{logged_in:cookies.access_token})
         }
