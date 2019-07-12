@@ -12,8 +12,6 @@ router
     .get('/', async (req, res) => {
         const cookies = cookie.parse(req.headers.cookie);
         console.log(cookies.access_token);
-        console.log(cookie.parse(req.headers.cookie));
-        console.log(req.headers.cookie);
         if(cookies.access_token) {
             try {
                 const get_pockets_json = await axios({
@@ -38,7 +36,6 @@ router
                 console.log(tag_list)
                 res.render('../src/index.pug',{logged_in:cookies.access_token,tag_list:tag_list});
             } catch(e) {
-                console.log('キャッチあああああああああああ');
                 res.render('../src/index.pug',{logged_in:undefined})
             }
         }else{
