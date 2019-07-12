@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // app.set('view engine', 'pug');
-app.engin('pug', require('pug').__express)
+app.engine('pug', require('pug').__express)
 
 app.set('trust proxy', 1);
 
