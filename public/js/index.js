@@ -9,8 +9,14 @@ const openUrl = async (x) => {
     console.log(articles_data)
     if(articles_data.data.length !== 0) {
         for(let i in articles_data.data){
-            window.open(articles_data.data[i]['url']);
+            if(document.getElementById('open_tab').checked) {
+                window.open(articles_data.data[i]['url']);
+            }else{
+                console.log(articles_data.data[i]['title']);
+                document.getElementsByClassName('history')[0].insertAdjacentHTML('afterbegin',`<li><a href=${articles_data.data[i]['url']} target="_blank">${articles_data.data[i]['title']}</a></li>`)
+            }
         }
     }else{
+        console.log('test');
     }
 }

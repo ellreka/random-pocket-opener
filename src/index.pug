@@ -9,7 +9,7 @@ html
         script(src="https://unpkg.com/axios/dist/axios.min.js")
         script(type="text/javascript" src="/js/index.js")
         div(class="container")
-            h2(class="ui header") Random Pocket Opener
+            h2 Random Pocket Opener
             p Pocketに保存されているアイテムをランダムに開きます。
             if logged_in==undefined
                 a(id="login" href='/login') #login
@@ -19,10 +19,9 @@ html
                         tr
                             th タグ
                             td
-                                div(class="ui action input")
-                                    select(name="tag_list" id="tag")
-                                        each item in tag_list
-                                            option(value=item) #{item}
+                                select(name="tag_list" id="tag")
+                                    each item in tag_list
+                                        option(value=item) #{item}
                             th ワード
                             td
                                 input(type="text" id="search_word")
@@ -34,7 +33,9 @@ html
                                         option(value=i) #{i}
                             th タブで開く
                             td
-                                input(type="checkbox" checked)
+                                input(type="checkbox" id="open_tab" checked)
                 span(id="open" onclick="openUrl();") #open
                 div(style="margin-left:auto;")
                     a(href="/logout") #logout
+                span(style="border-bottom:1px dashed black; width: 80%;")
+                ul.history
