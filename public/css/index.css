@@ -1,0 +1,40 @@
+.container {
+	display: flex;
+	flex-direction: column;
+  	align-items: center;
+    font-family: Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+}
+
+.table{
+	font-size: 1rem;
+    margin: 20px;
+}
+
+.table, th, td {
+    border: none;
+}
+
+.table tr th {
+	padding: 12px 17px;
+    font-size: 5px;
+}
+
+.table tr th:after {
+    content: ":";
+}
+
+#login {
+    font-size: 20px;
+    margin: 30px;
+}
+
+#open {
+    cursor: pointer;
+    border-bottom: 1px solid;
+    font-size: 20px;
+    margin: 30px;
+}
+
+#open:hover {
+    color: #4444;
+}
