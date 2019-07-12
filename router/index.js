@@ -36,7 +36,7 @@ router
                 console.log(tag_list)
                 res.render('../src/index.pug',{logged_in:cookies.access_token,tag_list:tag_list});
             } catch(e) {
-                console.log(e);
+                console.log('キャッチあああああああああああ');
                 res.render('../src/index.pug',{logged_in:undefined})
             }
         }else{
