@@ -13,6 +13,7 @@ router
         // const cookies = cookie.parse(req.headers.cookie);
         const cookies = {access_token:undefined}
         console.log(cookies.access_token);
+        console.log(cookie);
         console.log(req.headers.cookie);
         if(cookies.access_token) {
             try {
