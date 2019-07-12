@@ -13,6 +13,7 @@ router
         // const cookies = cookie.parse(req.headers.cookie);
         const cookies = {access_token:undefined}
         console.log(cookies.access_token);
+        console.log(req.headers.cookie);
         if(cookies.access_token) {
             try {
                 const get_pockets_json = await axios({
