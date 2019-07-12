@@ -24,5 +24,6 @@ app.use(session({
 app.use('/', router);
 
 app.listen(process.env.PORT || 8000, function() {
+    console.log(process.env);
     console.log('listening on port 8000');
 })
