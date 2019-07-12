@@ -11,7 +11,7 @@ const redirect_uri = (req,res) => {
 router
     .get('/', async (req, res) => {
         // const cookies = cookie.parse(req.headers.cookie);
-        const cookies = undefined
+        const cookies = {access_token:undefined}
         console.log(cookies.access_token);
         if(cookies.access_token) {
             try {
