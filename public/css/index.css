@@ -1,6 +1,7 @@
 .container {
     font-family: Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
     text-align: center;
+    max-width: 100%;
 }
 
 .table{
@@ -19,6 +20,10 @@
 
 .table tr th:after {
     content: ":";
+}
+
+input {
+    -webkit-appearance:none;
 }
 
 #login {
