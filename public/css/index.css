@@ -1,13 +1,12 @@
 .container {
-	display: flex;
-	flex-direction: column;
-  	align-items: center;
-    /* font-family: Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif; */
+    font-family: Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    text-align: center;
 }
 
 .table{
 	font-size: 1rem;
-    margin: 20px;
+    margin: 0 auto;
+    white-space: nowrap;
 }
 
 .table, th, td {
