@@ -2,7 +2,7 @@
 	display: flex;
 	flex-direction: column;
   	align-items: center;
-    font-family: Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    /* font-family: Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif; */
 }
 
 .table{
@@ -15,7 +15,6 @@
 }
 
 .table tr th {
-	padding: 12px 17px;
     font-size: 5px;
 }
 
