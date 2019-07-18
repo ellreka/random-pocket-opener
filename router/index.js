@@ -3,15 +3,14 @@ const axios = require('axios');
 const cookie = require('cookie');
 const router = express.Router();
 require('dotenv').config();
-console.log(process.env.CONSUMER_KEY);
 const consumer_key = process.env.CONSUMER_KEY;
 const redirect_uri = (req,res) => {
     return req.protocol + '://' + req.get('host') + '/callback'
 };
 router
     .get('/', async (req, res) => {
-        const cookies = cookie.parse(req.headers.cookie);
-        console.log(cookies.access_token);
+        const cookies = cookie.parse(req.headers.cookie || 'foo=bar;');
+        console.log(cookies);
         if(cookies.access_token) {
             try {
                 const get_pockets_json = await axios({

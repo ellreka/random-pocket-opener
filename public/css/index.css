@@ -22,8 +22,10 @@
     content: ":";
 }
 
-input {
-    -webkit-appearance:none;
+#search_word {
+    border: 1px solid silver;
+    border-radius: 4px;
+    height: 20px;
 }
 
 #login {
