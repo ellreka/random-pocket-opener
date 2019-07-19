@@ -47,3 +47,6 @@ body{
 #open:hover {
     color: #4444;
 }
+.history {
+    text-align: left;
+}
