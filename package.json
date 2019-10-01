@@ -9,7 +9,8 @@
     "client": "webpack-dev-server",
     "build": "webpack --watch",
     "server": "nodemon server/server.js",
-    "dev": "concurrently \"yarn build\" \"yarn server\""
+    "dev": "concurrently \"yarn build\" \"yarn server\"",
+    "start": "webpack && node server/server.js"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

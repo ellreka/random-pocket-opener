@@ -11,12 +11,9 @@ class Index extends React.Component {
     this.state = {
       authenticated: false
     };
-    console.log('うんち')
     const access_token = Cookies.get('access_token');
     if (!access_token) {
-      console.log('から')
     } else {
-      console.log('あ')
       // タグを取得する
       this.state.authenticated = true;
     }
