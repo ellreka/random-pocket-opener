@@ -11,17 +11,11 @@ class Auth extends React.Component {
   }
 
  async authenticationHandle( req, res ) {
-    console.log('authenticationHandle');
-    // fetch('/api/').then(response => {
-    //   console.log(response.json());
-    //   console.log('val')
-    // })
-    const request_token = await axios({
+    const authorize_url = await axios({
       method: 'GET',
-      url: '/api'
+      url: '/auth'
     })
-    console.log('うん')
-    console.log(request_token)
+    document.location.href = authorize_url['data']['authorize_url'];
   }
 
   render() {
