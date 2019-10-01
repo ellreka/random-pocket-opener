@@ -10,8 +10,18 @@ class Auth extends React.Component {
     };
   }
 
-  async authenticationHandle() {
-    console.log('authenticationHandle')
+ async authenticationHandle( req, res ) {
+    console.log('authenticationHandle');
+    // fetch('/api/').then(response => {
+    //   console.log(response.json());
+    //   console.log('val')
+    // })
+    const request_token = await axios({
+      method: 'GET',
+      url: '/api'
+    })
+    console.log('うん')
+    console.log(request_token)
   }
 
   render() {

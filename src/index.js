@@ -16,7 +16,7 @@ class Index extends React.Component {
     if (!access_token) {
       console.log('から')
     } else {
-      console.log('ある')
+      console.log('あ')
       // タグを取得する
       this.state.authenticated = true;
     }
