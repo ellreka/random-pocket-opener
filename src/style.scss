@@ -1,0 +1,16 @@
+@import "bootstrap/scss/bootstrap/";
+body {
+  background: #3a3a3a;
+  // display: flex;
+  color: #fff;
+}
+
+.st {
+  &-Header {
+    border-bottom: 1px solid rgb(224, 224, 224);
+    height: 80px;
+  }
+  &-Header_Title {
+    font-family: fantasy;
+  }
+}
