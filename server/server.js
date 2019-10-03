@@ -16,7 +16,7 @@ app.use(session({
   cookie: { maxAge: 10 * 1000 }
 }));
 
-app.get('/auth', async (req, res) => {
+app.get('/auth', (req, res) => {
   pocket.getRequestToken( consumer_key , function( data ) {
     req.session.request_token = data['code']
     res.send({authorize_url: `https://getpocket.com/auth/authorize?request_token=${req.session.request_token}&redirect_uri=http://localhost:8000/callback`})
@@ -30,6 +30,31 @@ app.get('/callback', (req, res) => {
     res.cookie('access_token', data['access_token']);
     res.redirect('/');
   });
+})
+
+app.get('/api/tags', (req, res) => {
+})
+
+app.get('/api/pick', async (req, res) => {
+  const pocket_json = await axios({
+    method: 'POST',
+    url: 'https://getpocket.com/v3/get',
+    params: {
+        consumer_key: consumer_key,
+        access_token: req.query['access_token'],
+        detailType: 'simple',
+        tag: req.query['tag'],
+        search: req.query['word'],
+        count: req.query['count']
+        }
+})
+const pocket_arr = Object.entries(pocket_json['data']['list']).map(data => {
+  return {
+    title: data[1]['resolved_title'],
+    url: data[1]['resolved_url']
+  }
+})
+console.log(pocket_arr)
 })
 
 app.listen(8000, ()=> {
