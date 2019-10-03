@@ -32,7 +32,26 @@ app.get('/callback', (req, res) => {
   });
 })
 
-app.get('/api/tags', (req, res) => {
+app.get('/api/tags', async (req, res) => {
+  const pocket_json = await axios({
+    method: 'POST',
+    url: 'https://getpocket.com/v3/get',
+    params: {
+        consumer_key: consumer_key,
+        access_token: req.query['access_token'],
+        detailType: 'complete',
+        count: 20
+        }
+})
+// console.log(pocket_json['data']['list']['2653282151'])
+// const pocket_arr = Object.entries(pocket_json['data']['list']).map(data => {
+//   return Object.keys(data[1]['tags']) || undefined
+// })
+const pocket_arr = Object.entries(pocket_json['data']['list']).map(data => {
+  return Object.keys(data[1]['tags'] || {'_untagged_':undefined})
+})
+res.send(Array.from(new Set(pocket_arr.flat())))
+
 })
 
 app.get('/api/pick', async (req, res) => {

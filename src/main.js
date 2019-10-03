@@ -17,6 +17,14 @@ class Main extends React.Component {
   }
 
   async componentDidMount() {
+    const tags = await axios({
+      method: 'GET',
+      url: '/api/tags',
+      params: {
+        access_token: Cookies.get('access_token')
+      }
+    })
+    console.log(tags)
   }
 
   __changeSelection(id) {
