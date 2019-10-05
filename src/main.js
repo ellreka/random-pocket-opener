@@ -3,6 +3,7 @@ import { Button, Spinner, Input } from 'reactstrap';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import LZString from 'lz-string';
+import History from './history';
 
 class Main extends React.Component {
     constructor(props) {
@@ -12,8 +13,9 @@ class Main extends React.Component {
       all_selected: true,
       word: '',
       count: 1,
-      is_open: true,
-      isLoading: false
+      open: true,
+      isLoading: false,
+      history: []
     };
   }
 
@@ -67,6 +69,23 @@ class Main extends React.Component {
     const word_sort = JSON.parse(local_data).filter(val => val.title.indexOf(this.state.word) !== -1);
     const tags_sort = word_sort.filter(val => val.tags.some((val) => this.state.tags.map((x) => x.selected ? x.name : null).includes(val)));
     console.log(tags_sort)
+    const random_arr = ([...arr], n = 1) => {
+      let m = arr.length;
+      while (m) {
+        const i = Math.floor(Math.random() * m--);
+        [arr[m], arr[i]] = [arr[i], arr[m]];
+      }
+      return arr.slice(0, n);
+    };
+    let history_arr = [];
+    for(let i of random_arr(tags_sort, this.state.count)) {
+      console.log(i)
+      if(this.state.open) {
+        window.open(i.url)
+      }
+      history_arr.push({'title': i.title, 'url': i.url, 'image': i.image})
+    }
+    this.setState({history: [...this.state.history, ...history_arr]})
   }
   render() {
     return (
@@ -102,7 +121,7 @@ class Main extends React.Component {
                   <th scope="col">count</th>
                   <td>
                   <select className="form-control" onChange={(e) => this.setState({count: e.target.value})}>
-                    { [...Array(10).keys()].map((v,i) => 
+                    { [...Array(10).keys()].map((v,i) =>
                       <option value={++i} key={i}>{i}</option>
                     ) }
                   </select>
@@ -112,15 +131,15 @@ class Main extends React.Component {
                   <th>sort</th>
                   <td>
                     <label>
-                      <input type="checkbox"/>
+                      <input type="radio"/>
                       newest
                     </label>
                     <label>
-                      <input type="checkbox"/>
+                      <input type="radio"/>
                       oldest
                     </label>
                     <label>
-                      <input type="checkbox"/>
+                      <input type="radio"/>
                       random
                     </label>
                   </td>
@@ -129,13 +148,14 @@ class Main extends React.Component {
                   <th>open</th>
                   <td>
                     <label>
-                      <input type="checkbox"/>
+                      <input type="checkbox" onChange={() => this.setState({open: !this.state.open})} checked={ this.state.open }/>
                     </label>
                   </td>
                 </tr>
               </tbody>
             </table>
             <Button className="mt-5" variant="outline-secondary" onClick={() => this.openHandle()}>OPEN</Button>
+            <History history={this.state.history}/>
           </div>
         )}
       </main>

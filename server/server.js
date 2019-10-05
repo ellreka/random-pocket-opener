@@ -48,7 +48,7 @@ app.get('/api/get', async (req, res) => {
       title: data[1]['resolved_title'],
       url: data[1]['resolved_url'],
       tags: Object.keys(data[1]['tags'] || {'_untagged_':undefined}),
-      image: data[1]['image']
+      image: data[1]['image'] || {'image':undefined}
     }
   })
   const pocket_tags_arr = pocket_articles_arr.map((val) => {
