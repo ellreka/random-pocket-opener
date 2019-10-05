@@ -3,6 +3,7 @@ const path = require('path');
 const axios = require('axios');
 const pocket = require('pocket-api');
 const session = require('express-session');
+const LZString = require('lz-string');
 
 const consumer_key = '81334-d57a6937c20cab86963d47e2';
 
@@ -32,7 +33,7 @@ app.get('/callback', (req, res) => {
   });
 })
 
-app.get('/api/tags', async (req, res) => {
+app.get('/api/get', async (req, res) => {
   const pocket_json = await axios({
     method: 'POST',
     url: 'https://getpocket.com/v3/get',
@@ -41,33 +42,23 @@ app.get('/api/tags', async (req, res) => {
         access_token: req.query['access_token'],
         detailType: 'complete'
         }
-})
-const pocket_arr = Object.entries(pocket_json['data']['list']).map(data => {
-  return Object.keys(data[1]['tags'] || {'_untagged_':undefined})
-})
-res.send(Array.from(new Set(pocket_arr.flat())))
-})
-
-app.get('/api/pick', async (req, res) => {
-  const pocket_json = await axios({
-    method: 'POST',
-    url: 'https://getpocket.com/v3/get',
-    params: {
-        consumer_key: consumer_key,
-        access_token: req.query['access_token'],
-        detailType: 'simple',
-        tag: req.query['tag'],
-        search: req.query['word'],
-        count: req.query['count']
-        }
-})
-const pocket_arr = Object.entries(pocket_json['data']['list']).map(data => {
-  return {
-    title: data[1]['resolved_title'],
-    url: data[1]['resolved_url']
+  })
+  const pocket_articles_arr = Object.entries(pocket_json['data']['list']).map(data => {
+    return {
+      title: data[1]['resolved_title'],
+      url: data[1]['resolved_url'],
+      tags: Object.keys(data[1]['tags'] || {'_untagged_':undefined}),
+      image: data[1]['image']
+    }
+  })
+  const pocket_tags_arr = pocket_articles_arr.map((val) => {
+    return val.tags
+  })
+  const pocket_data = {
+    tags: Array.from(new Set(pocket_tags_arr.flat())),
+    articles: LZString.compressToUTF16(JSON.stringify(pocket_articles_arr))
   }
-})
-console.log(pocket_arr)
+  res.send(pocket_data)
 })
 
 app.listen(8000, ()=> {

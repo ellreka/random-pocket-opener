@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button, Spinner, Input, Slect } from 'reactstrap';
+import { Button, Spinner, Input } from 'reactstrap';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import LZString from 'lz-string';
 
 class Main extends React.Component {
     constructor(props) {
@@ -12,28 +13,29 @@ class Main extends React.Component {
       word: '',
       count: 1,
       is_open: true,
-      isLoading: true
+      isLoading: false
     };
   }
 
   async componentDidMount() {
-    // const res_tags = await axios({
-    //   method: 'GET',
-    //   url: '/api/tags',
-    //   params: {
-    //     access_token: Cookies.get('access_token')
-    //   }
-    // })
-    // console.log(res_tags.data)
-    // const tags_data = res_tags.data.map((val,index) => {
-    //   return {
-    //     id: index,
-    //     name: val,
-    //     selected: true
-    //   }
-    // })
-    // this.setState({tags: tags_data})
-    // this.setState({isLoading: true})
+    const pocket_data = await axios({
+      method: 'GET',
+      url: '/api/get',
+      params: {
+        access_token: Cookies.get('access_token')
+      }
+    })
+    console.log(pocket_data)
+    const tags_data = pocket_data.data.tags.map((val,index) => {
+      return {
+        id: index,
+        name: val,
+        selected: true
+      }
+    })
+    localStorage.setItem('pocket_articles',pocket_data.data.articles)
+    this.setState({tags: tags_data})
+    this.setState({isLoading: true})
   }
 
   __changeSelection(id) {
@@ -44,8 +46,6 @@ class Main extends React.Component {
         selected: (val.id === id ? !val.selected : val.selected)
       };
     });
-
-    console.log(tagsState);
     this.setState( {tags: tagsState });
   }
   
@@ -63,17 +63,10 @@ class Main extends React.Component {
   }
 
   async openHandle( req, res ) {
-    const res_articles = await axios({
-      method: 'GET',
-      url: '/api/pick',
-      params: {
-        access_token: Cookies.get('access_token'),
-        tag: '',
-        word: this.state.word,
-        count: Number(this.state.count)
-      }
-    })
-    console.log(res_articles)
+    const local_data = LZString.decompressFromUTF16(localStorage.getItem('pocket_articles'));
+    const word_sort = JSON.parse(local_data).filter(val => val.title.indexOf(this.state.word) !== -1);
+    const tags_sort = word_sort.filter(val => val.tags.some((val) => this.state.tags.map((x) => x.selected ? x.name : null).includes(val)));
+    console.log(tags_sort)
   }
   render() {
     return (
@@ -82,7 +75,6 @@ class Main extends React.Component {
           <Spinner animation="border"/>
         ) : (
           <div>
-            <p>認証済み</p>
             <table className="table">
               <tbody>
                 <tr>
@@ -114,6 +106,31 @@ class Main extends React.Component {
                       <option value={++i} key={i}>{i}</option>
                     ) }
                   </select>
+                  </td>
+                </tr>
+                <tr>
+                  <th>sort</th>
+                  <td>
+                    <label>
+                      <input type="checkbox"/>
+                      newest
+                    </label>
+                    <label>
+                      <input type="checkbox"/>
+                      oldest
+                    </label>
+                    <label>
+                      <input type="checkbox"/>
+                      random
+                    </label>
+                  </td>
+                </tr>
+                <tr>
+                  <th>open</th>
+                  <td>
+                    <label>
+                      <input type="checkbox"/>
+                    </label>
                   </td>
                 </tr>
               </tbody>
