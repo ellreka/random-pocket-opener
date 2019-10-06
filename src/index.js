@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './style.scss';
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import Cookies from 'js-cookie';
 import Auth from './auth';
 import Main from './main';
@@ -12,12 +11,9 @@ class Index extends React.Component {
       authenticated: false
     };
     const access_token = Cookies.get('access_token');
-    if (!access_token) {
-    } else {
-      // タグを取得する
+    if (access_token) {
       this.state.authenticated = true;
     }
-    // Cookies.set('access_token',12345);
   }
 
   render() {

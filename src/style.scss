@@ -14,3 +14,15 @@ body {
     font-family: fantasy;
   }
 }
+
+.history {
+  &-card {
+    img {
+      height: 500px;
+      width: 300px;
+      object-fit: cover;
+      object-position: center center;
+      border-radius: 3px;
+    }
+  }
+}

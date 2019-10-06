@@ -10,7 +10,7 @@
     "build": "webpack --watch",
     "server": "nodemon server/server.js",
     "dev": "concurrently \"yarn build\" \"yarn server\"",
-    "start": "webpack && node server/server.js"
+    "start": "node server/server.js"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
