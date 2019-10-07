@@ -20,7 +20,7 @@ app.use(session({
 app.get('/auth', (req, res) => {
   pocket.getRequestToken( consumer_key , function( data ) {
     req.session.request_token = data['code']
-    res.send({authorize_url: `https://getpocket.com/auth/authorize?request_token=${req.session.request_token}&redirect_uri=http://localhost:8000/callback`})
+    res.send({authorize_url: `https://getpocket.com/auth/authorize?request_token=${req.session.request_token}&redirect_uri=${req.protocol + '://' + req.get('host')}/callback`})
   });
 })
 

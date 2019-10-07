@@ -20,7 +20,7 @@ class Index extends React.Component {
     return (
       <div className="">
         <header className="st-Header d-flex justify-content-center align-items-center">
-          <h4 className="st-Header_Title">Random Pocket Opener</h4>
+          <h4 className="st-Header_Title">Pocket Opener</h4>
         </header>
         {this.state.authenticated ? (
           <Main />
