@@ -28,16 +28,16 @@ class Main extends React.Component {
       }
     })
     console.log(pocket_data)
-      const tags_data = pocket_data.data.tags.map((val,index) => {
-        return {
-          id: index,
-          name: val,
-          selected: true
-        }
-      })
-      localStorage.setItem('pocket_articles',pocket_data.data.articles)
-      this.setState({tags: tags_data})
-      this.setState({isLoading: true})
+    const tags_data = pocket_data.data.tags.map((val,index) => {
+      return {
+        id: index,
+        name: val,
+        selected: true
+      }
+    })
+    localStorage.setItem('pocket_articles',pocket_data.data.articles)
+    this.setState({tags: tags_data})
+    this.setState({isLoading: true})
   }
 
   __changeSelection(id) {

@@ -3,14 +3,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
   mode: 'development',
+  devtool: 'source-map',
   entry: './src/index.js',
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: path.join(__dirname, '../dist'),
     port: 3000,
     compress: true,
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '../dist'),
     filename: 'bundle.js?[hash]'
   },
   module: {
@@ -40,7 +41,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'src/index.html') ,
+      template: path.resolve(__dirname, '../src/index.html') ,
       filename: 'index.html'
     }),
     new CopyWebpackPlugin([

@@ -3,11 +3,6 @@ import { Button } from 'reactstrap';
 import axios from 'axios';
 
 class Auth extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
 
 async authenticationHandle( req, res ) {
   const authorize_url = await axios({
