@@ -7,7 +7,7 @@ module.exports = {
   entry: './server/index.js',
   target: 'node',
   output: {
-    path: path.resolve(__dirname, '../dist/bin'),
+    path: path.resolve(__dirname, '../dist/server'),
     filename: './bundle.server.js'
   },
   externals: [nodeExternals()],

@@ -10,7 +10,7 @@
     "build:client": "webpack --config webpack/client.config.js",
     "build:server": "webpack --config webpack/server.config.js",
     "dev": "webpack-dev-server --config webpack/client.config.js",
-    "start": "concurrently \"yarn build:client --watch\" \"yarn build:server && node dist/bin/bundle.server.js\""
+    "start": "concurrently \"yarn build:client --watch\" \"yarn build:server && node dist/server/bundle.server.js\""
   },
   "devDependencies": {
     "axios": "^0.19.0",

@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
   mode: 'development',
   devtool: 'source-map',
-  entry: './src/index.js',
+  entry: './client/index.js',
   devServer: {
     contentBase: path.join(__dirname, '../dist'),
     port: 3000,
@@ -41,7 +41,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '../src/index.html') ,
+      template: path.resolve(__dirname, '../client/index.html') ,
       filename: 'index.html'
     }),
     new CopyWebpackPlugin([
