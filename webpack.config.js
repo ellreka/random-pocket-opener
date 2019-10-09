@@ -1,8 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
   mode: 'development',
-  entry: ['@babel/polyfill', './src/index.js'],
+  entry: './src/index.js',
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     port: 3000,
@@ -41,6 +42,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'src/index.html') ,
       filename: 'index.html'
-    })
+    }),
+    new CopyWebpackPlugin([
+      { from: './favicon.ico' }
+    ])
   ]
 };
