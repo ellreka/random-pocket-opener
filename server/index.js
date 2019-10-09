@@ -5,7 +5,10 @@ const pocket = require('pocket-api');
 const session = require('express-session');
 const LZString = require('lz-string');
 
-const consumer_key = '81334-d57a6937c20cab86963d47e2';
+require('dotenv').config();
+const env = process.env;
+
+const consumer_key = env.POCKET_ACCESSTOKEN;
 
 const app = express();
 
