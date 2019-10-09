@@ -10,22 +10,26 @@ class Index extends React.Component {
     this.state = {
       authenticated: false
     };
+  }
+  componentDidMount() {
     const access_token = Cookies.get('access_token');
     if (access_token) {
-      this.state.authenticated = true;
+      this.setState({authenticated: true})
+    } else {
+      this.setState({authenticated: false})
     }
   }
 
   render() {
     return (
       <div className="">
-        <header className="st-Header d-flex justify-content-center align-items-center">
-          <h4 className="st-Header_Title">Pocket Opener</h4>
+        <header className="">
+          <h4 className="">Pocket Opener</h4>
         </header>
         {this.state.authenticated ? (
           <Main />
         ) : (
-          <Auth />
+          <Auth/>
         )}
         <footer>
 
