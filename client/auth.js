@@ -14,9 +14,11 @@ async authenticationHandle( req, res ) {
 
   render() {
     return (
-      <main className="login-Container d-flex flex-column justify-content-center align-items-center mt-5">
-        <p className="lead">Pocketに保存している記事をソートして開く</p>
-        <Button className="mt-5" variant="outline-secondary" onClick={() => this.authenticationHandle()}>Pocketと連携</Button>
+      <main>
+        <div className="st-Content px-3">
+          <p className="mt-5">Sort, narrow down and open articles stored in your pocket</p>
+          <Button className="mt-5" variant="outline-secondary" onClick={() => this.authenticationHandle()}>Authorize Pocket</Button>
+        </div>
       </main>
     );
   }

@@ -1,28 +1,76 @@
 @import "bootstrap/scss/bootstrap/";
-body {
-  background: #3a3a3a;
-  // display: flex;
-  color: #fff;
-}
 
+input[type="checkbox"],[type="radio"] {
+  margin-left: 10px;
+}
+input[type="text"],select {
+  max-width: 300px;
+  margin: 0 auto;
+}
 .st {
   &-Header {
-    border-bottom: 1px solid rgb(224, 224, 224);
     height: 80px;
+    background: #ff8484;
+    color: #fff;
+    text-align: center;
+    h4 {
+      line-height: 80px;
+    }
   }
-  &-Header_Title {
-    font-family: fantasy;
+  &-Container {
+    main {
+      background: #ececec;
+      padding-bottom: 50px;
+    }
+  }
+  &-Content {
+    padding-top: 60px;
+    text-align: center;
+    width: calc(100% - 30%);
+    margin: 0 auto;
+    @media screen and (max-width: 480px) {
+      width: 100%;
+    }
+  }
+  &-Footer {
+    text-align: center;
+    background: #fff;
+    color: #999;
   }
 }
 
 .history {
-  &-card {
+  &-Content {
+    margin-top: 50px;
+    h5 {
+      border-bottom: solid 5px #ff8484;
+      display: inline-block;
+    }
+  }
+  &-CardList {
+    margin-top: 30px;
+    list-style: none;
+    padding: 0 10px;
+  }
+  &-Card {
+    background: #fff;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    a {
+      display: flex;
+      align-items: center;
+    }
     img {
-      height: 500px;
-      width: 300px;
+      height: 150px;
+      width: 35%;
       object-fit: cover;
       object-position: center center;
-      border-radius: 3px;
+    }
+    p {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
     }
   }
 }

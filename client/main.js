@@ -77,31 +77,34 @@ class Main extends React.Component {
       }
       return arr.slice(0, n);
     };
-    let history_arr = [];
+    let history_arr = this.state.history.reverse();
     for(let i of random_arr(tags_sort, this.state.count)) {
       console.log(i)
       if(this.state.open) {
         window.open(i.url)
       }
-      history_arr.push({'title': i.title, 'url': i.url, 'image': i.image})
+      history_arr.unshift({'title': i.title, 'url': i.url, 'image': i.image})
     }
-    this.setState({history: [...this.state.history, ...history_arr]})
+    this.setState({history: history_arr})
   }
   render() {
     return (
-      <main className="main-Container d-flex flex-column justify-content-center align-items-center mt-5">
+      <main>
         {!this.state.isLoading ? (
-          <Spinner animation="border"/>
+          <div className="st-Content">
+            <p>now loading ...</p>
+            <Spinner animation="border"/>
+          </div>
         ) : (
-          <div>
-            <table className="table">
+          <div className="st-Content">
+            <table className="table table-borderless">
               <tbody>
                 <tr>
-                  <th scope="col">タグ</th>
+                  <th>tag</th>
                   <td>
                     <label>
                       <input type="checkbox" checked={ this.state.all_selected } onChange={() => this.__changeAllChecks()}/>
-                      全て
+                      all
                     </label>
                     { this.state.tags.map((val, key) => (
                       <label key={ key }>
@@ -112,13 +115,13 @@ class Main extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="col">ワード</th>
+                  <th>word</th>
                   <td>
                       <Input value={this.state.word} onChange={(e) => this.setState({word: e.target.value})}/>
                   </td>
                 </tr>
                 <tr>
-                  <th scope="col">count</th>
+                  <th>count</th>
                   <td>
                   <select className="form-control" onChange={(e) => this.setState({count: e.target.value})}>
                     { [...Array(10).keys()].map((v,i) =>
@@ -154,7 +157,7 @@ class Main extends React.Component {
                 </tr>
               </tbody>
             </table>
-            <Button className="mt-5" variant="outline-secondary" onClick={() => this.openHandle()}>OPEN</Button>
+            <Button className="mt-2" variant="outline-secondary" onClick={() => this.openHandle()}>OPEN</Button>
             <History history={this.state.history}/>
           </div>
         )}

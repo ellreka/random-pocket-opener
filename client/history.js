@@ -4,19 +4,18 @@ class History extends React.Component {
 
   render() {
     return (
-      <div>
-        <p>履歴</p>
-        <a className="history-card" href="#">
-          <img src="#" alt=""/>
-          <p>あああああ</p>
-        </a>
+      <div className="history-Content">
+        <h5 className="font-weight-bold">History</h5>
+        <ul className="history-CardList">
         {this.props.history.map((val,key) => (
-          <div key={ key }>
-            <p key={ key }>{val.title}</p>
-            {/* <p>{ val.image }</p> */}
-            <img src={ val.image.src || '' } />
-          </div>
+          <li key={ key } className="history-Card">
+            <a href={ val.url } target="_blank">
+              <img src={ val.image.src || './images/no-image.png' } />
+              <p>{val.title}</p>
+            </a>
+          </li>
         ))}
+        </ul>
       </div>
     );
   }
