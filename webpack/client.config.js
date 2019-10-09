@@ -2,8 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
-  mode: 'development',
-  devtool: 'source-map',
+  mode: process.env.WEBPACK_ENV,
   entry: './client/index.js',
   devServer: {
     contentBase: path.join(__dirname, '../dist'),

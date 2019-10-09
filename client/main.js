@@ -27,7 +27,6 @@ class Main extends React.Component {
         access_token: Cookies.get('access_token')
       }
     })
-    console.log(pocket_data)
     const tags_data = pocket_data.data.tags.map((val,index) => {
       return {
         id: index,
@@ -68,7 +67,6 @@ class Main extends React.Component {
     const local_data = LZString.decompressFromUTF16(localStorage.getItem('pocket_articles'));
     const word_sort = JSON.parse(local_data).filter(val => val.title.indexOf(this.state.word) !== -1);
     const tags_sort = word_sort.filter(val => val.tags.some((val) => this.state.tags.map((x) => x.selected ? x.name : null).includes(val)));
-    console.log(tags_sort)
     const random_arr = ([...arr], n = 1) => {
       let m = arr.length;
       while (m) {
@@ -79,7 +77,6 @@ class Main extends React.Component {
     };
     let history_arr = this.state.history.reverse();
     for(let i of random_arr(tags_sort, this.state.count)) {
-      console.log(i)
       if(this.state.open) {
         window.open(i.url)
       }

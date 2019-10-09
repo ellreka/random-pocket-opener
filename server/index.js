@@ -27,7 +27,6 @@ app.get('/auth', (req, res) => {
 app.get('/callback', (req, res) => {
   if(req.session.request_token !== undefined) {
     pocket.getAccessToken( consumer_key , req.session.request_token, function( data ) {
-      console.log( data );
       res.cookie('access_token', data['access_token']);
       res.redirect('/');
     });
