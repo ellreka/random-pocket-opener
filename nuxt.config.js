@@ -1,3 +1,6 @@
+require('dotenv').config()
+const { CONSUMER_KEY } = process.env
+
 module.exports = {
   mode: 'spa',
   /*
@@ -51,5 +54,9 @@ module.exports = {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  serverMiddleware: ['~/api/index.js'],
+  env: {
+    CONSUMER_KEY
   }
 }

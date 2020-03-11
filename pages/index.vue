@@ -1,73 +1,78 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        pocket-opener
-      </h1>
-      <h2 class="subtitle">
-        My slick Nuxt.js project
-      </h2>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+  <div>
+    <Header></Header>
+    <main>
+      <div>
+        <dl>
+          <dt>Tag</dt>
+          <dd>
+            <CheckBox></CheckBox>
+          </dd>
+        </dl>
+        <dl>
+          <dt>Title</dt>
+          <dd>
+            <Input />
+          </dd>
+        </dl>
+        <dl>
+          <dt>Sort</dt>
+          <dd></dd>
+        </dl>
+        <dl>
+          <dt>Count</dt>
+          <dd></dd>
+        </dl>
+        <dl>
+          <dt>Open</dt>
+          <dd></dd>
+        </dl>
       </div>
-    </div>
+      <button @click="open">Open</button>
+    </main>
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+// import axios from 'axios'
+import Header from '~/components/Header'
+import CheckBox from '~/components/parts/CheckBox'
+import Input from '~/components/parts/Input'
 
 export default {
   components: {
-    Logo
+    Header,
+    CheckBox,
+    Input
+  },
+  async asyncData({ store, redirect }) {
+    // const response = await axios.post('/api/get')
+    // store.commit('save', response.data.articles)
+    // console.log(store.state.articles)
+    // if (response.data === 'ERROR') {
+    //   return redirect('/login')
+    // }
+  },
+  methods: {
+    open(e) {
+      const params = {
+        tag: [],
+        title: '',
+        count: 10,
+        sort: ''
+      }
+      this.$store.commit('get', params)
+    }
   }
 }
 </script>
 
 <style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-  @apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+table th {
+  width: 10%;
 }
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+input:checked + svg {
   display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
 }
 </style>
