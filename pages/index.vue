@@ -2,11 +2,18 @@
   <div>
     <Header></Header>
     <main>
-      <div>
+      <div class="w-9/12 m-auto pt-10">
         <dl>
           <dt>Tag</dt>
-          <dd>
-            <CheckBox></CheckBox>
+          <dd class="flex flex-wrap">
+            <AllCheckBox class="mr-5" :label="'ALL'"></AllCheckBox>
+            <CheckBox
+              v-for="(val, key) in tags"
+              :key="key"
+              class="mr-5"
+              :label="val.name"
+              :checked="val.checked"
+            ></CheckBox>
           </dd>
         </dl>
         <dl>
@@ -28,48 +35,72 @@
           <dd></dd>
         </dl>
       </div>
-      <button @click="open">Open</button>
+      <div class="text-center">
+        <button
+          class="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded mt-10 m-auto"
+          @click="open"
+        >
+          OPEN
+        </button>
+      </div>
     </main>
   </div>
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 import Header from '~/components/Header'
 import CheckBox from '~/components/parts/CheckBox'
+import AllCheckBox from '~/components/parts/AllCheckBox'
 import Input from '~/components/parts/Input'
 
 export default {
   components: {
     Header,
     CheckBox,
+    AllCheckBox,
     Input
   },
   async asyncData({ store, redirect }) {
-    // const response = await axios.post('/api/get')
-    // store.commit('save', response.data.articles)
-    // console.log(store.state.articles)
-    // if (response.data === 'ERROR') {
-    //   return redirect('/login')
-    // }
+    const response = await axios.post('/api/get')
+    store.commit('save', response.data.articles)
+    console.log(store.state.articles)
+    if (response.data === 'ERROR') {
+      return redirect('/login')
+    }
+    store.commit('tags')
+  },
+  computed: {
+    tags() {
+      return this.$store.state.tags
+    }
   },
   methods: {
-    open(e) {
-      const params = {
-        tag: [],
-        title: '',
-        count: 10,
-        sort: ''
-      }
-      this.$store.commit('get', params)
+    open() {
+      this.$store.commit('get')
     }
   }
 }
 </script>
 
 <style>
-table th {
+dl {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+dl + dl {
+  margin-top: 25px;
+}
+
+dt {
   width: 10%;
+}
+
+dd {
+  width: 90%;
 }
 
 input:checked + svg {

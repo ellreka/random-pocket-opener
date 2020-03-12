@@ -44,7 +44,8 @@ app.post('/get', async function(req, res) {
       return {
         title: val[1].resolved_title,
         url: val[1].resolved_url,
-        tags: Object.keys(val[1].tags || {}),
+        tags:
+          val[1].tags !== undefined ? Object.keys(val[1].tags) : ['_untagged_'],
         image: val[1].image !== undefined ? val[1].image.src : undefined
       }
     })
