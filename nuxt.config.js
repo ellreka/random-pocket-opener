@@ -1,4 +1,3 @@
-require('dotenv').config()
 const { CONSUMER_KEY } = process.env
 
 module.exports = {

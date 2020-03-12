@@ -6,5 +6,13 @@
       "use": "@nuxtjs/now-builder",
       "config": {}
     }
-  ]
+  ],
+  "env": {
+    "CONSUMER_KEY": "@consumer_key"
+  },
+  "build": {
+    "env": {
+      "CONSUMER_KEY": "@consumer_key"
+    }
+  }
 }
