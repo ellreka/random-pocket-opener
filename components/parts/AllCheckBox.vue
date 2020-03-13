@@ -3,7 +3,12 @@
     <div
       class="bg-white border-2 rounded border-gray-darker w-6 h-6 flex flex-shrink-0 justify-center items-center mr-2 focus-within:border-blue-500"
     >
-      <input type="checkbox" class="opacity-0 absolute" @click="allCheck" />
+      <input
+        type="checkbox"
+        class="opacity-0 absolute"
+        checked
+        @click="allCheck"
+      />
       <svg
         class="fill-current hidden w-4 h-4 text-green-500 pointer-events-none"
         viewBox="0 0 20 20"

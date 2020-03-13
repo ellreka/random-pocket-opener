@@ -28,7 +28,9 @@
         </dl>
         <dl>
           <dt>Count</dt>
-          <dd></dd>
+          <dd>
+            <Select></Select>
+          </dd>
         </dl>
         <dl>
           <dt>Open</dt>
@@ -53,18 +55,19 @@ import Header from '~/components/Header'
 import CheckBox from '~/components/parts/CheckBox'
 import AllCheckBox from '~/components/parts/AllCheckBox'
 import Input from '~/components/parts/Input'
+import Select from '~/components/parts/Select'
 
 export default {
   components: {
     Header,
     CheckBox,
     AllCheckBox,
-    Input
+    Input,
+    Select
   },
   async asyncData({ store, redirect }) {
     const response = await axios.post('/api/get')
     store.commit('save', response.data.articles)
-    console.log(store.state.articles)
     if (response.data === 'ERROR') {
       return redirect('/login')
     }
@@ -77,7 +80,27 @@ export default {
   },
   methods: {
     open() {
-      this.$store.commit('get')
+      const checkedTag = this.$store.state.tags.map((val) => {
+        if (val.checked) return val.name
+      })
+      const sortArticles = this.$store.state.articles.filter(
+        (item) =>
+          item.tags.some((el) => checkedTag.includes(el)) &&
+          item.title.includes(this.$store.state.params.title)
+      )
+      const shuffle = ([...array]) => {
+        for (let i = array.length - 1; i >= 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1))
+          ;[array[i], array[j]] = [array[j], array[i]]
+        }
+        return array
+      }
+      const shuffleArticles = shuffle(sortArticles)
+      const result = shuffleArticles.slice(0, this.$store.state.params.count)
+      console.log(result)
+      result.forEach((val) => {
+        window.open(val.url)
+      })
     }
   }
 }
