@@ -10,7 +10,7 @@ require('dotenv').config()
 app.post('/auth', async function(req, res) {
   const response = await axios.post('https://getpocket.com/v3/oauth/request', {
     consumer_key: process.env.CONSUMER_KEY,
-    redirect_uri: 'https://localhost:3000'
+    redirect_uri: `${req.protocol}//${req.hostname}`
   })
   const requestToken = response.data.split('=')[1]
   res.send(requestToken)

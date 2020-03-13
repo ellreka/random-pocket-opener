@@ -25,8 +25,8 @@ export default {
     async auth(e) {
       const response = await axios.post('/api/auth')
       const requestToken = response.data
-      console.log(requestToken)
-      location.href = `https://getpocket.com/auth/authorize?request_token=${requestToken}&redirect_uri=http://localhost:3000/api/callback?code=${requestToken}`
+      const redirectUrl = `${location.protocol}//${location.hostname}`
+      location.href = `https://getpocket.com/auth/authorize?request_token=${requestToken}&redirect_uri=${redirectUrl}/api/callback?code=${requestToken}`
     }
   }
 }
